@@ -8,13 +8,13 @@ class DiceViewTranslatorImpl implements DiceViewTranslator {
     public int diceValueToDrawable(Dice dice, DiceViewState viewState) {
         switch (viewState) {
             case NOT_ROLLED:
-                return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.GRAY);
+                return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.WHITE);
             case SAVE_VALUE:
                 return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.RED);
             case ROLLING:
             case HAS_VALUE:
             default:
-                return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.WHITE);
+                return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.GRAY);
 
         }
     }
