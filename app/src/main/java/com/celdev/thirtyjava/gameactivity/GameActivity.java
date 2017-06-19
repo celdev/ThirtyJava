@@ -1,13 +1,18 @@
 package com.celdev.thirtyjava.gameactivity;
 
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.celdev.thirtyjava.R;
+import com.celdev.thirtyjava.gameactivity.scoring.GetDiceCallback;
+import com.celdev.thirtyjava.gameactivity.scoring.ScoringFragment;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.view.DiceCheckbox;
 
@@ -19,7 +24,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity implements GameActivityMVP.View{
+public class GameActivity extends AppCompatActivity implements GameActivityMVP.View, GetDiceCallback {
 
     @BindViews({R.id.dice_1, R.id.dice_2, R.id.dice_3, R.id.dice_4, R.id.dice_5, R.id.dice_6})
     List<DiceCheckbox> diceCheckboxes;
@@ -37,6 +42,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
     Button rollButton;
 
     private GameActivityMVP.Presenter presenter;
+    private ScoringFragment scoringFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,14 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
     public void continueRound(View view) {
         onFinishRound();
         doDicePlay();
+    }
+
+    @OnClick(R.id.scoreButton)
+    public void openScoringDialog(View view) {
+        scoringFragment = ScoringFragment.newInstance();
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        scoringFragment.show(supportFragmentManager, "scoring_fragment");
+        scoringFragment.injectGetDiceCallbackAndPresenter(this, presenter);
     }
 
     @Override
@@ -99,6 +113,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
         List<Dice> dices = new ArrayList<>();
         for (DiceCheckbox diceCheckbox : diceCheckboxes) {
             dices.add(diceCheckbox.getDice());
+            Log.d("gameacivity", "dice values: " + diceCheckbox.getDice().getValue());
         }
         return dices;
     }

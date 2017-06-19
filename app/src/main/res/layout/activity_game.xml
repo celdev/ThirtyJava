@@ -92,6 +92,10 @@
 
 
     </RelativeLayout>
+
+
+
+
     <Button
         android:layout_width="368dp"
         android:layout_height="wrap_content"
@@ -112,7 +116,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteX="8dp" />
-
+    <Button
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="set score"
+        android:id="@+id/scoreButton"
+        app:layout_constraintBottom_toTopOf="@id/continueRound"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:enabled="true"
+        tools:layout_editor_absoluteX="8dp" />
 
 
 

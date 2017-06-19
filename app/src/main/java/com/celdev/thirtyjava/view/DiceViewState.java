@@ -5,6 +5,8 @@ public enum DiceViewState {
     NOT_ROLLED,
     ROLLING,
     HAS_VALUE,
-    SAVE_VALUE
+    SAVE_VALUE,
+
+    MAKE_DICE_COMBINATION
 
 }

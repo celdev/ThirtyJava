@@ -10,6 +10,7 @@ class DiceViewTranslatorImpl implements DiceViewTranslator {
             case NOT_ROLLED:
                 return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.WHITE);
             case SAVE_VALUE:
+            case MAKE_DICE_COMBINATION:
                 return DiceDrawableRepository.valueAndColorToDrawable(dice.getValue(), DiceColor.RED);
             case ROLLING:
             case HAS_VALUE:

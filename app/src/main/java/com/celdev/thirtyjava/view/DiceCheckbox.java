@@ -46,6 +46,9 @@ public class DiceCheckbox extends android.support.v7.widget.AppCompatCheckBox im
     private DiceViewState viewState = DiceViewState.NOT_ROLLED;
     private DiceViewTranslator translator = new DiceViewTranslatorImpl();
 
+    public DiceViewState getViewState() {
+        return viewState;
+    }
 
     public void setState(DiceViewState viewState) {
         if (canChangeState) {
@@ -140,10 +143,7 @@ public class DiceCheckbox extends android.support.v7.widget.AppCompatCheckBox im
             setState(DiceViewState.HAS_VALUE);
         }
     }
-
-
-
-
+    
     @Override
     public Dice getDice() {
         return dice;
