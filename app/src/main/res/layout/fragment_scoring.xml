@@ -85,7 +85,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose dice"
+        android:text="@string/make_combination"
+        android:enabled="false"
         android:layout_below="@id/total_score_text"
         android:id="@+id/choose_dice_button"
         />

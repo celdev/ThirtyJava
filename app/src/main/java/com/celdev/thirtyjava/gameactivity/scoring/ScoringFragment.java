@@ -41,6 +41,9 @@ public class ScoringFragment extends DialogFragment implements AdapterView.OnIte
     @BindView(R.id.finish_set_value_button)
     Button finishSetScoreButton;
 
+    @BindView(R.id.choose_dice_button)
+    Button makeDiceCombinationButton;
+
     @BindView(R.id.choiceSpinner)
     Spinner choiceSpinner;
 
@@ -105,32 +108,21 @@ public class ScoringFragment extends DialogFragment implements AdapterView.OnIte
         return new ScoringFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-    }
-
-    public void disableSpinner() {
-        choiceSpinner.setEnabled(false);
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
             calculateLowScore();
+        } else {
+            calculateScore(position + 3);
         }
+
+    }
+
+    private void calculateScore(int i) {
+        //TODO
     }
 
     private void calculateLowScore() {

@@ -6,6 +6,7 @@
     <string name="start_round">Start Round</string>
     <string name="marked_score">Marked Score: %1$d</string>
     <string name="total_score">Total score: %1$d</string>
+    <string name="make_combination">Make Combination</string>
 
     <string-array name="scoring_choices">
         <item>Low</item>
