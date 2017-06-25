@@ -30,4 +30,7 @@ public enum ScoringMode {
         return LOW;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

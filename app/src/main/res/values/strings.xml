@@ -7,6 +7,8 @@
     <string name="marked_score">Marked Score: %1$d</string>
     <string name="total_score">Total score: %1$d</string>
     <string name="make_combination">Make Combination</string>
+    <string name="select_dices_for_combo">Select dices for combination</string>
+    <string name="wrong_combination">Wrong combination</string>
 
     <string-array name="scoring_choices">
         <item>Low</item>
