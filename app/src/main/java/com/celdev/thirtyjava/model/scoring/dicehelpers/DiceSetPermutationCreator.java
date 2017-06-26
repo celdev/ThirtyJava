@@ -9,16 +9,18 @@ public class DiceSetPermutationCreator {
 
     private DiceSet diceSet;
 
-    private Set<DiceSet> permutations = new HashSet<>();
-
     public DiceSetPermutationCreator(DiceSet diceSet) {
         this.diceSet = diceSet;
     }
 
-    public DiceSetPermutationCreator createPermutations() {
-
-
-        return this;
+    public Set<DiceSet> createAndGetPermutations() {
+        Set<DiceSet> permutations = new HashSet<>();
+        String original = diceSet.getDiceSetAsCharString();
+        List<String> diceStringPermutations = Permuter.permutation(original);
+        for (String permutation : diceStringPermutations) {
+            permutations.add(new DiceSet(permutation));
+        }
+        return permutations;
     }
 
     private static class Permuter {
@@ -45,6 +47,8 @@ public class DiceSetPermutationCreator {
          *  so if the List contains AB and BA and the String c = C
          *  then the result which this method returns will contain
          *  ABC, ACB, CAB, BAC, BCA, CBA
+         *  which in turn may be used with the String c = D if the
+         *  Original String was ABCD
          * */
         private static List<String> merge(List<String> basesToAddLastChar, String c) {
             List<String> result = new ArrayList<>();

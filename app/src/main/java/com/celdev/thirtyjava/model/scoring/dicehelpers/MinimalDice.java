@@ -10,8 +10,16 @@ public class MinimalDice {
         value = dice.getValue();
     }
 
+    public MinimalDice(char diceChar) {;
+        value = diceChar - 64;
+    }
+
     public int getValue() {
         return value;
+    }
+
+    public String getValueAsString() {
+        return "" + (char)(64+value);
     }
 
     @Override
