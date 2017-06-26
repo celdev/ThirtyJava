@@ -1,8 +1,9 @@
 package com.celdev.thirtyjava.gameactivity;
 
-import com.celdev.thirtyjava.model.Constants;
+import com.celdev.thirtyjava.gameactivity.GameActivityMVP.GameRepository;
 import com.celdev.thirtyjava.model.Dice;
-import com.celdev.thirtyjava.model.GameRound;
+import com.celdev.thirtyjava.model.GameScoring;
+import com.celdev.thirtyjava.model.scoring.ScoringMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,68 +12,52 @@ class PresenterImpl implements GameActivityMVP.Presenter {
 
     private GameActivityMVP.View view;
 
-    private int roundCount = 1;
-    private int throwCount = 1;
-    private List<GameRound> gameRounds;
+    private GameRepository gameRepository;
 
-    public PresenterImpl(GameActivityMVP.View view) {
+    public PresenterImpl(GameActivityMVP.View view, GameRepository gameRepository) {
         this.view = view;
-        gameRounds = new ArrayList<>();
+        this.gameRepository = gameRepository;
     }
 
+
     @Override
-    public void onDicePlay() {
-        throwCount++;
-        updateViewGUI();
-        if (view.getDiceValueSetCount() == view.getDices().size()) {
-            view.showRoundResults();
-        } else if (throwCount > Constants.THROWS_IN_ROUND) {
-            view.showRoundResults();
+    public void finishRound() {
+        gameRepository.incrementRound();
+        if (gameRepository.finishGame()) {
+            view.finishGame();
         } else {
-            view.newDiceThrow();
+            view.newRound();
         }
     }
 
     @Override
-    public void startNewRound() {
-        throwCount = 1;
-        view.startNewRound();
-    }
-
-    private void updateViewGUI() {
-        view.updateRoundText(roundCount);
-        view.updateThrowText(throwCount);
-    }
-
-    @Override
-    public void onRoundFinish() {
-        saveRound(roundCount,view.getDices());
-        roundCount++;
-        updateViewGUI();
-        if (roundCount > Constants.ROUNDS_IN_GAME) {
-            view.onFinishGame();
+    public void newThrow() {
+        gameRepository.incrementThrowCount();
+        if (gameRepository.finishRound()) {
+            view.finishRound();
         } else {
-            view.newDiceThrow();
+            view.newThrow();
         }
     }
 
-    private void saveRound(int roundCount, List<Dice> dices) {
-        gameRounds.add(new GameRound(roundCount, dices));
-        startNewRound();
+    @Override
+    public void saveScore(ScoringMode scoringMode, List<Dice> dices) {
+        gameRepository.saveScoring(dices, scoringMode);
     }
 
     @Override
-    public void onGameFinish() {
-        view.DEBUG_TOAST("Finished Game");
+    public int getThrowState() {
+        return gameRepository.getThrowCount();
     }
 
     @Override
-    public int getThrowCount() {
-        return throwCount;
+    public int getRoundState() {
+        return gameRepository.getRoundCount();
     }
 
     @Override
-    public int getRoundCount() {
-        return roundCount;
+    public ScoringMode[] getAvailableScoringModes() {
+        return gameRepository.getAvailableScoringModes();
     }
+
 }

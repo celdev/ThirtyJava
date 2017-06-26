@@ -4,14 +4,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.celdev.thirtyjava.R;
 
 import com.celdev.thirtyjava.model.Dice;
+import com.celdev.thirtyjava.model.scoring.ScoringMode;
 import com.celdev.thirtyjava.view.DiceCheckbox;
+import com.celdev.thirtyjava.view.DiceViewState;
+import com.celdev.thirtyjava.view.ScoringModeArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +27,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity implements GameActivityMVP.View {
+public class GameActivity extends AppCompatActivity implements GameActivityMVP.View, AdapterView.OnItemSelectedListener {
 
     @BindViews({R.id.dice_1, R.id.dice_2, R.id.dice_3, R.id.dice_4, R.id.dice_5, R.id.dice_6})
     List<DiceCheckbox> diceCheckboxes;
@@ -33,117 +39,119 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
     TextView roundTextView;
 
     @BindView(R.id.continueRound)
-    Button continueRoundButton;
+    Button continueButton;
 
     @BindView(R.id.rollBtn)
     Button rollButton;
 
+    @BindView(R.id.scoringChoiceSpinner)
+    Spinner scoringSpinner;
+
     private GameActivityMVP.Presenter presenter;
+
+    private ScoringMode chosenScoringMode = null;
+    private ScoringModeViewController scoringModeViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ButterKnife.bind(this);
-        presenter = new PresenterImpl(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateRoundText(presenter.getRoundCount());
-        updateThrowText(presenter.getThrowCount());
+        presenter = new PresenterImpl(this, new GameRepositoryImpl(this));
+        updateGUI();
+        scoringSpinner.setOnItemSelectedListener(this);
+        scoringModeViewController = new ScoringModeViewController(this);
     }
 
     @OnClick(R.id.rollBtn)
-    public void rollDice(View view) {
-        doDicePlay();
+    public void rollDices(View view) {
+        rollButton.setEnabled(false);
+        for (DiceCheckbox diceCheckbox : diceCheckboxes) {
+            diceCheckbox.rollDice();
+        }
+        presenter.newThrow();
     }
 
     @OnClick(R.id.continueRound)
-    public void continueRound(View view) {
-        onFinishRound();
-        doDicePlay();
-    }
-
-
-
-    @Override
-    public void doDicePlay() {
-        for (DiceCheckbox dcb : diceCheckboxes) {
-            dcb.rollDice();
+    public void continueGame(View view) {
+        if (chosenScoringMode == null) {
+            Toast.makeText(this, R.string.chooseScoringMode, Toast.LENGTH_SHORT).show();
+            return;
         }
-        presenter.onDicePlay();
+        continueButton.setVisibility(View.INVISIBLE);
+        scoringSpinner.setVisibility(View.INVISIBLE);
+        presenter.saveScore(chosenScoringMode, getDices());
+        presenter.finishRound();
+        scoringModeViewController.removeScoringMode(chosenScoringMode);
+        chosenScoringMode = null;
+        continueButton.setEnabled(false);
     }
 
-    @Override
-    public void newDiceThrow() {
-        for (DiceCheckbox dcb : diceCheckboxes) {
-            dcb.onNewThrow();
-        }
-    }
-
-    @Override
-    public void startNewRound() {
-        continueRoundButton.setEnabled(false);
-        rollButton.setEnabled(true);
-    }
-
-    @Override
-    public void showRoundResults() {
-        continueRoundButton.setEnabled(true);
-        rollButton.setEnabled(false);
-        for (DiceCheckbox dcb : diceCheckboxes) {
-            dcb.onLastThrow();
-        }
-    }
-
-    @Override
-    public List<Dice> getDices() {
+    private List<Dice> getDices() {
         List<Dice> dices = new ArrayList<>();
         for (DiceCheckbox diceCheckbox : diceCheckboxes) {
             dices.add(diceCheckbox.getDice());
-            Log.d("gameacivity", "dice values: " + diceCheckbox.getDice().getValue());
         }
         return dices;
     }
 
     @Override
-    public void onFinishRound() {
-        presenter.onRoundFinish();
-        for (DiceCheckbox dcb : diceCheckboxes) {
-            dcb.onNewRound();
+    public void newRound() {
+        for (DiceCheckbox diceCheckbox : diceCheckboxes) {
+            diceCheckbox.setState(DiceViewState.NOT_ROLLED);
         }
+        scoringModeViewController.showScoringModeState();
+        newThrow();
+        updateGUI();
     }
 
     @Override
-    public void onFinishGame() {
-        DEBUG_TOAST("finish game");
+    public void firstThrow() {
+        rollButton.setEnabled(true);
+        updateGUI();
     }
 
     @Override
-    public int getDiceValueSetCount() {
-        int count = 0;
-        for (DiceCheckbox dcb : diceCheckboxes) {
-            if (dcb.isSaveValue()) {
-                count++;
-            }
-        }
-        return count;
+    public void newThrow() {
+        rollButton.setEnabled(true);
+        updateGUI();
     }
 
     @Override
-    public void updateThrowText(int throwNumber) {
-        throwTextView.setText(getString(R.string.throw_number,throwNumber));
+    public void finishRound() {
+        Log.d("tag", "finishRound: ");
+        populateAndShowScoringSpinner();
+        continueButton.setVisibility(View.VISIBLE);
+        scoringModeViewController.hideScoringModeState();
+    }
+
+
+
+    @Override
+    public void finishGame() {
+
+    }
+
+    private void populateAndShowScoringSpinner() {
+        scoringSpinner.setAdapter(new ScoringModeArrayAdapter(this, android.R.layout.simple_spinner_item, presenter.getAvailableScoringModes()));
+        scoringSpinner.setVisibility(View.VISIBLE);
+    }
+
+    private void updateGUI() {
+        roundTextView.setText(getString(R.string.round_number,presenter.getRoundState()));
+        throwTextView.setText(getString(R.string.throw_number,presenter.getThrowState()));
     }
 
     @Override
-    public void updateRoundText(int roundNumber) {
-        roundTextView.setText(getString(R.string.round_number,roundNumber));
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ScoringMode scoringMode = (ScoringMode) scoringSpinner.getItemAtPosition(position);
+        Log.d("tag", scoringMode.name());
+        chosenScoringMode = scoringMode;
+        continueButton.setEnabled(true);
     }
 
     @Override
-    public void DEBUG_TOAST(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

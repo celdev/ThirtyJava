@@ -3,24 +3,23 @@
     <string name="roll_dice">Roll dice</string>
     <string name="throw_number">Throw number: %1$d</string>
     <string name="round_number">Round number: %1$d</string>
-    <string name="start_round">Start Round</string>
+    <string name="start_round">Set Score</string>
     <string name="marked_score">Marked Score: %1$d</string>
     <string name="total_score">Total score: %1$d</string>
     <string name="make_combination">Make Combination</string>
     <string name="select_dices_for_combo">Select dices for combination</string>
     <string name="wrong_combination">Wrong combination</string>
 
-    <string-array name="scoring_choices">
-        <item>Low</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-    </string-array>
+    <string name="scoring_low">Low</string>
+    <string name="scoring_4">Four</string>
+    <string name="scoring_5">Five</string>
+    <string name="scoring_6">Six</string>
+    <string name="scoring_7">Seven</string>
+    <string name="scoring_8">Eight</string>
+    <string name="scoring_9">Nine</string>
+    <string name="scoring_10">Ten</string>
+    <string name="scoring_11">Eleven</string>
+    <string name="scoring_12">Twelve</string>
+    <string name="chooseScoringMode">Please choose a scoring mode</string>
 
 </resources>

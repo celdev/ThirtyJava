@@ -1,48 +1,68 @@
 package com.celdev.thirtyjava.gameactivity;
 
+import android.content.Context;
+
 import com.celdev.thirtyjava.model.Dice;
+import com.celdev.thirtyjava.model.GameScoring;
+import com.celdev.thirtyjava.model.scoring.ScoringMode;
 
 import java.util.List;
 
 public interface GameActivityMVP {
 
     interface View {
-        void doDicePlay();
 
-        List<Dice> getDices();
+        void newRound();
 
-        void onFinishRound();
+        void firstThrow();
 
-        void onFinishGame();
+        void newThrow();
 
-        void newDiceThrow();
+        void finishRound();
 
-        int getDiceValueSetCount();
+        void finishGame();
 
-        void updateThrowText(int throwNumber);
-
-        void updateRoundText(int roundNumber);
-
-        void showRoundResults();
-
-        void startNewRound();
-
-        void DEBUG_TOAST(String msg);
     }
 
     interface Presenter {
 
-        void onDicePlay();
+        void finishRound();
 
-        void onRoundFinish();
+        void newThrow();
 
-        void onGameFinish();
+        void saveScore(ScoringMode scoringMode, List<Dice> dices);
+
+        int getThrowState();
+
+        int getRoundState();
+
+        ScoringMode[] getAvailableScoringModes();
+
+    }
+
+    interface GameRepository {
+
+        boolean finishRound();
+
+        boolean finishGame();
+
+        void saveGameState();
+
+        void loadGameState();
+
+        ScoringMode[] getAvailableScoringModes();
+
+        void saveScoring(List<Dice> dices, ScoringMode scoringMode);
+
+        GameScoring[] loadScoring();
 
         int getThrowCount();
 
-        int getRoundCount();
+        void incrementThrowCount();
 
-        void startNewRound();
+        void incrementRound();
+
+        int getRoundCount();
 
     }
 
