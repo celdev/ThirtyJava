@@ -38,6 +38,7 @@ public interface GameActivityMVP {
 
         ScoringMode[] getAvailableScoringModes();
 
+        GameScoring[] getScorings();
     }
 
     interface GameRepository {
@@ -61,6 +62,8 @@ public interface GameActivityMVP {
         void incrementThrowCount();
 
         void incrementRound();
+
+        GameScoring[] getGameScorings();
 
         int getRoundCount();
 

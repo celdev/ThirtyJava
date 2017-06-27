@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.celdev.thirtyjava.gameactivity.ResultActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_results"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/result_text"
+        tools:layout_editor_absoluteX="125dp" />
+
+    <TableLayout
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_table"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/table_border"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/result_text">
+
+        <TableRow android:paddingBottom="4dp"
+
+            >
+            <TextView
+                android:text="@string/scoring_low"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/table_padding"
+                android:paddingStart="@dimen/table_padding"
+                />
+            <TextView
+                android:text="6"
+                android:id="@+id/result_low"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+        <TableRow
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:text="@string/scoring_4"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_4"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+        <TableRow android:paddingBottom="4dp"
+            >
+            <TextView
+                android:text="@string/scoring_5"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_5"
+                android:textSize="@dimen/result_text_size"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp"
+            >
+            <TextView
+                android:text="@string/scoring_6"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_6"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp" >
+            <TextView
+                android:text="@string/scoring_7"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_7"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp" >
+            <TextView
+                android:text="@string/scoring_8"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_8"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow  android:paddingBottom="4dp">
+            <TextView
+                android:text="@string/scoring_9"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_9"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp" >
+            <TextView
+                android:text="@string/scoring_10"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_10"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp">
+            <TextView
+                android:text="@string/scoring_11"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_11"
+                android:textSize="@dimen/result_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                />
+        </TableRow>
+
+        
+        <TableRow android:paddingBottom="4dp">
+            <TextView
+                android:text="@string/scoring_12"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="8"
+                android:id="@+id/result_12"
+                android:textSize="@dimen/result_text_size"
+                android:paddingStart="@dimen/table_padding"
+                android:paddingEnd="@dimen/table_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+
+        
+    </TableLayout>
+
+
+</android.support.constraint.ConstraintLayout>

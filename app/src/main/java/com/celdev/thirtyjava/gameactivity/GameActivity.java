@@ -1,5 +1,6 @@
 package com.celdev.thirtyjava.gameactivity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.celdev.thirtyjava.R;
 
+import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
 import com.celdev.thirtyjava.view.DiceCheckbox;
@@ -130,6 +132,11 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
     @Override
     public void finishGame() {
 
+        Intent intent = new Intent(this, ResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.GAME_SCORINGS, presenter.getScorings());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void populateAndShowScoringSpinner() {

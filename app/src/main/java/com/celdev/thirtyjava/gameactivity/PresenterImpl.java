@@ -60,4 +60,9 @@ class PresenterImpl implements GameActivityMVP.Presenter {
         return gameRepository.getAvailableScoringModes();
     }
 
+    @Override
+    public GameScoring[] getScorings() {
+        return gameRepository.getGameScorings();
+    }
+
 }

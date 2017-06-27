@@ -2,9 +2,10 @@ package com.celdev.thirtyjava.model;
 
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class GameScoring {
+
+public class GameScoring implements Serializable {
 
     private ScoringMode scoringMode;
     private int score;
@@ -20,5 +21,9 @@ public class GameScoring {
 
     public int getScore() {
         return score;
+    }
+
+    public String getScoreAsString() {
+        return "" + score;
     }
 }

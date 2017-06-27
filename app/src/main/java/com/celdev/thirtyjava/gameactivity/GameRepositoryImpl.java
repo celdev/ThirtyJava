@@ -60,6 +60,11 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
         throwCount = 1;
     }
 
+    @Override
+    public GameScoring[] getGameScorings() {
+        return this.gameScorings;
+    }
+
 
     @Override
     public int getRoundCount() {
