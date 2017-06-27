@@ -45,7 +45,7 @@ public class DiceSetCounter {
 
     }
 
-    private int calculateDiceSetAsLow(DiceSet diceSet) {
+    public int calculateDiceSetAsLow(DiceSet diceSet) {
         int score = 0;
         for (MinimalDice dice : diceSet.getDices()) {
             if (dice.getValue() <= 3) {

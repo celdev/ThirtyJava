@@ -2,10 +2,12 @@ package com.celdev.thirtyjava.gameactivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.celdev.thirtyjava.R;
 import com.celdev.thirtyjava.gameactivity.GameActivityMVP.GameRepository;
+import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.GameScoring;
 
 import butterknife.BindView;
@@ -42,6 +44,13 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
         gameRepository = new GameRepositoryImpl(this);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Log.d("tag", "onCreate: budle is not null");
+            gameRepository.injectGameScorings((GameScoring[])bundle.getSerializable(Constants.GAME_SCORINGS));
+        } else {
+            Log.d("tag", "onCreate: bundle is null");
+        }
     }
 
 

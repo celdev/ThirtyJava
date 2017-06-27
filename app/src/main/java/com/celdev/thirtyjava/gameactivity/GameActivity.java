@@ -131,7 +131,6 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
 
     @Override
     public void finishGame() {
-
         Intent intent = new Intent(this, ResultActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.GAME_SCORINGS, presenter.getScorings());

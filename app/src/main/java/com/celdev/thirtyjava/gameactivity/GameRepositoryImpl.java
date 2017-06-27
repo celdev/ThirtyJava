@@ -5,7 +5,11 @@ import android.content.Context;
 import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.GameScoring;
+import com.celdev.thirtyjava.model.scoring.DiceSetCounter;
+import com.celdev.thirtyjava.model.scoring.ScoreCounter;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
+import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetCreator;
+import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetPermutationCreator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +65,11 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
     }
 
     @Override
+    public void injectGameScorings(GameScoring[] gameScorings) {
+        this.gameScorings = gameScorings;
+    }
+
+    @Override
     public GameScoring[] getGameScorings() {
         return this.gameScorings;
     }
@@ -79,6 +88,17 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
     @Override
     public void saveScoring(List<Dice> dices, ScoringMode scoringMode) {
         scoringModes.remove(scoringMode);
+        int scoringIndex = scoringMode.getScore() - 3;
+        if (scoringIndex < 0) {
+            scoringIndex = 0;
+        }
+        if (scoringMode.equals(ScoringMode.LOW)) {
+            gameScorings[scoringIndex] = new GameScoring(scoringMode, new DiceSetCounter().calculateDiceSetAsLow(new DiceSetCreator(dices).getDiceSet()));
+        } else {
+            gameScorings[scoringIndex] = new GameScoring(scoringMode,
+                    new DiceSetCounter().getMaxScoreOfAllDiceSetPermutations(
+                            new DiceSetPermutationCreator(new DiceSetCreator(dices).getDiceSet()).createAndGetPermutations(), scoringMode));
+        }
     }
 
     @Override

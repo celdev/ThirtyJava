@@ -2,8 +2,6 @@ package com.celdev.thirtyjava.model.scoring.dicehelpers;
 
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.scoring.DiceSetCounter;
-import com.celdev.thirtyjava.model.scoring.ScoreCounter;
-import com.celdev.thirtyjava.model.scoring.ScoreCounterImpl;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
 
 import org.junit.Test;

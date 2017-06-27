@@ -63,6 +63,8 @@ public interface GameActivityMVP {
 
         void incrementRound();
 
+        void injectGameScorings(GameScoring[] gameScorings);
+
         GameScoring[] getGameScorings();
 
         int getRoundCount();
