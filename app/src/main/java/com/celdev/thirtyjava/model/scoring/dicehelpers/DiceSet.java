@@ -1,5 +1,9 @@
 package com.celdev.thirtyjava.model.scoring.dicehelpers;
 
+import com.celdev.thirtyjava.model.Dice;
+
+import java.util.List;
+
 /** This class represents a set of 6 dices
  *  Since this class and the MinimalDice class overrides
  *  the hashcode and equals method this class helps with reducing
@@ -39,6 +43,20 @@ public class DiceSet {
         MinimalDice[] dices = new MinimalDice[6];
         for (int i = 0; i < diceSetAsString.length(); i++) {
             dices[i] = new MinimalDice(diceSetAsString.charAt(i));
+        }
+        this.dices = dices;
+        dice1 = dices[0];
+        dice2 = dices[1];
+        dice3 = dices[2];
+        dice4 = dices[3];
+        dice5 = dices[4];
+        dice6 = dices[5];
+    }
+
+    public DiceSet(List<Dice> diceList) {
+        MinimalDice[] dices = new MinimalDice[6];
+        for (int i = 0; i < diceList.size(); i++) {
+            dices[i] = new MinimalDice(diceList.get(i));
         }
         this.dices = dices;
         dice1 = dices[0];

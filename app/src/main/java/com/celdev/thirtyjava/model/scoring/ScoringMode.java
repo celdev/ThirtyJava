@@ -1,6 +1,7 @@
 package com.celdev.thirtyjava.model.scoring;
 
 import com.celdev.thirtyjava.R;
+import com.celdev.thirtyjava.model.LoadingException;
 
 public enum ScoringMode {
 
@@ -31,6 +32,15 @@ public enum ScoringMode {
             }
         }
         return LOW;
+    }
+
+    public static ScoringMode scoringModeFromNameString(String name) throws LoadingException {
+        for (ScoringMode scoringMode : values()) {
+            if (scoringMode.name().equals(name)) {
+                return scoringMode;
+            }
+        }
+        throw new LoadingException();
     }
 
     public int getSpinnerNameStringId() {

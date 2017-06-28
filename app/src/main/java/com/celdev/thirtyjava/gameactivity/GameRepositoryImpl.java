@@ -1,6 +1,7 @@
 package com.celdev.thirtyjava.gameactivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.Dice;
@@ -8,6 +9,7 @@ import com.celdev.thirtyjava.model.GameScoring;
 import com.celdev.thirtyjava.model.scoring.DiceSetCounter;
 import com.celdev.thirtyjava.model.scoring.ScoreCounter;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
+import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSet;
 import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetCreator;
 import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetPermutationCreator;
 
@@ -16,6 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 class GameRepositoryImpl implements GameActivityMVP.GameRepository {
+
+    private static final String PREF_KEY = "celdev.thirtyjava.game";
+    private static final String GAME_SCORING_BASE_KEY = "celdev.thirtyjava.scoring";
 
     private Context context;
     private int throwCount = 1;
@@ -40,7 +45,17 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
 
     @Override
     public void saveGameState() {
-        //todo
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (int i = 0; i < gameScorings.length; i++) {
+            GameScoring gameScoring = gameScorings[i];
+            if (gameScoring != null) {
+                editor.putString(GAME_SCORING_BASE_KEY + "_" + i, gameScoring.getGameScoringAsStorableObject());
+            }
+        }
+        editor.putInt(GAME_SCORING_BASE_KEY.concat(".roundnr"), roundCount);
+        editor.putInt(GAME_SCORING_BASE_KEY.concat(".thrownr"), throwCount);
+        editor.apply();
     }
 
     @Override
@@ -92,13 +107,7 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
         if (scoringIndex < 0) {
             scoringIndex = 0;
         }
-        if (scoringMode.equals(ScoringMode.LOW)) {
-            gameScorings[scoringIndex] = new GameScoring(scoringMode, new DiceSetCounter().calculateDiceSetAsLow(new DiceSetCreator(dices).getDiceSet()));
-        } else {
-            gameScorings[scoringIndex] = new GameScoring(scoringMode,
-                    new DiceSetCounter().getMaxScoreOfAllDiceSetPermutations(
-                            new DiceSetPermutationCreator(new DiceSetCreator(dices).getDiceSet()).createAndGetPermutations(), scoringMode));
-        }
+        gameScorings[scoringIndex] = new GameScoring(scoringMode, new ScoreCounter().calculateScore(dices, scoringMode));
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 public class GameScoring implements Serializable {
 
-    private ScoringMode scoringMode;
-    private int score;
+    private final ScoringMode scoringMode;
+    private final int score;
 
     public GameScoring(ScoringMode scoringMode, int score) {
         this.scoringMode = scoringMode;
@@ -25,5 +25,15 @@ public class GameScoring implements Serializable {
 
     public String getScoreAsString() {
         return "" + score;
+    }
+
+    public String getGameScoringAsStorableObject() {
+        return scoringMode.name() + ";" + score + "&";
+    }
+
+    public GameScoring(String createFromString) throws LoadingException {
+        String[] split = createFromString.split(";");
+        scoringMode = ScoringMode.scoringModeFromNameString(split[0]);
+        score = Integer.parseInt(split[1]);
     }
 }

@@ -10,14 +10,16 @@ import java.util.Set;
 
 public class ScoreCounter {
 
-
-    public int calculateScore(List<Dice> dices, ScoringMode scoringMode){
-        DiceSet diceSet = new DiceSetCreator(dices).getDiceSet();
+    public int calculateScore(List<Dice> dices, ScoringMode scoringMode) {
+        if (scoringMode.equals(ScoringMode.LOW)) {
+            return calculateLowScore(dices);
+        }
+        DiceSet diceSet = new DiceSet(dices);
         Set<DiceSet> permutations = new DiceSetPermutationCreator(diceSet).createAndGetPermutations();
-        return new DiceSetCounter().getMaxScoreOfAllDiceSetPermutations(permutations,scoringMode);
+        return new DiceSetCounter().getMaxScoreOfAllDiceSetPermutations(permutations, scoringMode);
     }
 
-    public int calculateLowScore(List<Dice> dices) {
+    private int calculateLowScore(List<Dice> dices) {
         int score = 0;
         for (Dice dice : dices) {
             if (dice.getValue() <= 3) {
