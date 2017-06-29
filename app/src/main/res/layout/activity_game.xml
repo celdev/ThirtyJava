@@ -60,7 +60,7 @@
             android:id="@+id/dice_3"
             android:layout_width="@dimen/dice_size"
             android:layout_height="@dimen/dice_size"
-            android:layout_below="@+id/dice_1"
+            android:layout_below="@id/dice_1"
             android:layout_marginEnd="@dimen/dice_margin"
             android:layout_marginBottom="@dimen/dice_margin"
             />
