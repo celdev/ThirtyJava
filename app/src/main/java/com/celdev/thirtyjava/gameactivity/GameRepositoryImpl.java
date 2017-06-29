@@ -64,6 +64,15 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
     }
 
     @Override
+    public void injectGameState(GameApplicationState gameState) {
+        throwCount = gameState.getThrowCount();
+        roundCount = gameState.getRoundCount();
+        gameScorings = gameState.getGameScorings();
+        scoringModes = new ArrayList<>(Arrays.asList(gameState.getAvailableScoringModes()));
+        gameScorings = gameState.getGameScorings();
+    }
+
+    @Override
     public int getThrowCount() {
         return throwCount;
     }

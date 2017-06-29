@@ -1,16 +1,20 @@
 package com.celdev.thirtyjava.gameactivity;
 
-import android.content.Context;
+import android.os.Bundle;
 
+import com.celdev.thirtyjava.helpers.DiceCheckboxViewState;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.GameScoring;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
+import com.celdev.thirtyjava.view.DiceViewState;
 
 import java.util.List;
 
 public interface GameActivityMVP {
 
     interface View {
+
+        void setState(List<Dice> dices, List<DiceViewState> diceViewStates, ScoringMode[] availableScoringModes);
 
         void newRound();
 
@@ -38,7 +42,15 @@ public interface GameActivityMVP {
 
         ScoringMode[] getAvailableScoringModes();
 
+        void onSaveInstanceState(Bundle outState);
+
+        void onRestoreInstanceState(Bundle bundle);
+
+        GameApplicationState createGameApplicationState(List<DiceCheckboxViewState> diceCheckboxViewStates, GameApplicationState.GameViewState gameViewState);
+
         GameScoring[] getScorings();
+
+        void injectGameState(GameApplicationState gameState);
     }
 
     interface GameRepository {
@@ -69,6 +81,7 @@ public interface GameActivityMVP {
 
         int getRoundCount();
 
+        void injectGameState(GameApplicationState gameState);
     }
 
 

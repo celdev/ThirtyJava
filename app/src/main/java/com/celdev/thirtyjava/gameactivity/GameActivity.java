@@ -1,6 +1,8 @@
 package com.celdev.thirtyjava.gameactivity;
 
+import android.app.Application;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import com.celdev.thirtyjava.R;
 
+import com.celdev.thirtyjava.gameactivity.GameApplicationState.GameViewState;
+import com.celdev.thirtyjava.helpers.DiceCheckboxViewState;
 import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
@@ -21,6 +25,7 @@ import com.celdev.thirtyjava.view.DiceCheckbox;
 import com.celdev.thirtyjava.view.DiceViewState;
 import com.celdev.thirtyjava.view.ScoringModeArrayAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +58,9 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
 
     private ScoringMode chosenScoringMode = null;
     private ScoringModeViewController scoringModeViewController;
+
+    private GameViewState gameViewState = GameViewState.ROLL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +95,59 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
         scoringModeViewController.removeScoringMode(chosenScoringMode);
         chosenScoringMode = null;
         continueButton.setEnabled(false);
+        gameViewState = GameViewState.ROLL;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            GameApplicationState gameState = (GameApplicationState) savedInstanceState.getSerializable("gamestate");
+            if (gameState != null) {
+                List<DiceCheckboxViewState> diceCheckboxViewStateList = gameState.getDiceCheckboxViewStateList();
+                for (int i = 0; i < diceCheckboxViewStateList.size(); i++) {
+                    diceCheckboxes.get(i).injectDice(diceCheckboxViewStateList.get(i).getDice());
+                    diceCheckboxes.get(i).setState(diceCheckboxViewStateList.get(i).getDiceViewState());
+                }
+                presenter.injectGameState(gameState);
+                scoringModeViewController.injectAvailableScoringModes(gameState.getAvailableScoringModes());
+                switch (gameState.getGameViewState()) {
+                    case ROLL:
+                        newThrow();
+                        break;
+                    case SET_SCORE:
+                        finishRound();
+                        break;
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void setState(List<Dice> dices, List<DiceViewState> diceViewStates, ScoringMode[] availableScoringModes) {
+        for (int i = 0; i < dices.size(); i++) {
+            DiceCheckbox diceCheckbox = diceCheckboxes.get(i);
+            diceCheckbox.injectDice(dices.get(i));
+            diceCheckbox.setState(diceViewStates.get(i));
+        }
+        scoringModeViewController.injectAvailableScoringModes(availableScoringModes);
+        updateGUI();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        GameApplicationState gameApplicationState = presenter.createGameApplicationState(getDiceCheckboxViewStates(), gameViewState);
+        outState.putSerializable("gamestate", gameApplicationState);
+    }
+
+    private List<DiceCheckboxViewState> getDiceCheckboxViewStates() {
+        List<DiceCheckboxViewState> diceCheckboxViewStates = new ArrayList<>();
+        for (DiceCheckbox diceCheckbox : diceCheckboxes) {
+            diceCheckboxViewStates.add(new DiceCheckboxViewState(diceCheckbox.getDice(), diceCheckbox.getViewState()));
+        }
+        return diceCheckboxViewStates;
     }
 
     private List<Dice> getDices() {
@@ -125,6 +186,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityMVP.V
         populateAndShowScoringSpinner();
         continueButton.setVisibility(View.VISIBLE);
         scoringModeViewController.hideScoringModeState();
+        gameViewState = GameViewState.SET_SCORE;
     }
 
 

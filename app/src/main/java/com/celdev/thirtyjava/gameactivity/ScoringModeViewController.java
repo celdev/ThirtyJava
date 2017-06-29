@@ -9,6 +9,11 @@ import android.widget.TextView;
 import com.celdev.thirtyjava.R;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -56,6 +61,16 @@ public class ScoringModeViewController {
     public void restoreState(ScoringMode[] disabledModes) {
         for (ScoringMode scoringMode : disabledModes) {
             removeScoringMode(scoringMode);
+        }
+    }
+
+    public void injectAvailableScoringModes(ScoringMode[] availableScoringModes) {
+        List<ScoringMode> all = Arrays.asList(ScoringMode.values());
+        List<ScoringMode> available = new ArrayList<>(Arrays.asList(availableScoringModes));
+        for (ScoringMode scoringMode : all) {
+            if (!available.contains(scoringMode)) {
+                removeScoringMode(scoringMode);
+            }
         }
     }
 
