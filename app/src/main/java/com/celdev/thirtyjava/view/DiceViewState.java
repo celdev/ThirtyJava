@@ -7,6 +7,5 @@ public enum DiceViewState {
     HAS_VALUE,
     SAVE_VALUE,
 
-    MAKE_DICE_COMBINATION
 
 }

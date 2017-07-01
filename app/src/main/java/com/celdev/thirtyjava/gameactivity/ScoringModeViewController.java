@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ScoringModeViewController {
+class ScoringModeViewController {
 
     @BindView(R.id.scoring_state_table)
     TableLayout scoringStateTable;
@@ -45,26 +45,21 @@ public class ScoringModeViewController {
 
 
 
-    public ScoringModeViewController(Activity activity) {
+    ScoringModeViewController(Activity activity) {
         ButterKnife.bind(this, activity);
         scoringStateTable.setVisibility(View.VISIBLE);
     }
 
-    public void hideScoringModeState() {
+    void hideScoringModeState() {
         scoringStateTable.setVisibility(View.INVISIBLE);
     }
 
-    public void showScoringModeState() {
+    void showScoringModeState() {
         scoringStateTable.setVisibility(View.VISIBLE);
     }
 
-    public void restoreState(ScoringMode[] disabledModes) {
-        for (ScoringMode scoringMode : disabledModes) {
-            removeScoringMode(scoringMode);
-        }
-    }
 
-    public void injectAvailableScoringModes(ScoringMode[] availableScoringModes) {
+    void injectAvailableScoringModes(ScoringMode[] availableScoringModes) {
         List<ScoringMode> all = Arrays.asList(ScoringMode.values());
         List<ScoringMode> available = new ArrayList<>(Arrays.asList(availableScoringModes));
         for (ScoringMode scoringMode : all) {
@@ -74,7 +69,7 @@ public class ScoringModeViewController {
         }
     }
 
-    public void removeScoringMode(ScoringMode scoringMode) {
+    void removeScoringMode(ScoringMode scoringMode) {
         switch (scoringMode) {
             case LOW:
                 low.setVisibility(View.INVISIBLE);
@@ -108,5 +103,4 @@ public class ScoringModeViewController {
                 break;
         }
     }
-
 }

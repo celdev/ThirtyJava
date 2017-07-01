@@ -2,7 +2,6 @@ package com.celdev.thirtyjava.model.scoring;
 
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSet;
-import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetCreator;
 import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetPermutationCreator;
 
 import java.util.List;

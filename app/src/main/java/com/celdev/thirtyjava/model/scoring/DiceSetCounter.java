@@ -19,15 +19,6 @@ public class DiceSetCounter {
         return topScore;
     }
 
-    public int getScoreOfDiceSet(DiceSet diceSet, ScoringMode scoringMode) {
-        int scoringModeInt = scoringMode.getScore();
-        if (scoringModeInt == -1) {
-            return calculateDiceSetAsLow(diceSet);
-        } else {
-            return count(diceSet, scoringModeInt);
-        }
-    }
-
     private int count(DiceSet diceSet, int targetScore) {
         int score = 0;
         int tempscore = 0;
@@ -43,16 +34,6 @@ public class DiceSetCounter {
         }
         return score;
 
-    }
-
-    public int calculateDiceSetAsLow(DiceSet diceSet) {
-        int score = 0;
-        for (MinimalDice dice : diceSet.getDices()) {
-            if (dice.getValue() <= 3) {
-                score += dice.getValue();
-            }
-        }
-        return score;
     }
 
 }

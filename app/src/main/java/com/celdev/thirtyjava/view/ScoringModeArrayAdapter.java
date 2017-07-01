@@ -41,6 +41,7 @@ public class ScoringModeArrayAdapter extends ArrayAdapter<ScoringMode> {
 
 
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         TextView label = new TextView(context);

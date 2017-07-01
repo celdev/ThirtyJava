@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
+/** This class contains Util methods for converting Dip to pixel
+ *  (used in the custom View DiceCheckbox)
+ * */
 public class Utils {
 
 

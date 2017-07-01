@@ -17,19 +17,28 @@ import java.util.List;
  *  e.g. [1][3][4][5][2(a)][2(b)] and [1][3][4][5][2(b)][2(a)]
  *
  *  using this class and a Set<DiceSet> this will be reduced to one entry
- *  in the Set
+ *  in the Set since this class overrides the equals and hashcode methods
+ *  which will cause two different objects containing the same sequence of
+ *  dice to be considered equal and have the same hashcode.
  *
  *  The maximum DiceSets to check for score will be 6! (=720)
  *  and this will only be the case when every dice have a different value
  *  given two duplicate dice values (e.g. [1] [1] [2] [2] [4] [5])
  *  only 120 DiceSets will have their maximum score calculated
+ *
+ *  This class has three constructors
+ *      * 6 MinimalDice (used by Tests)
+ *      * A String (used when creating a DiceSet a Set of all permutations
+ *        of an original DiceSet
+ *      * A List of Dice (used when creating the original DiceSet to use for creating
+ *        the permutations.
  * */
 public class DiceSet {
 
     private final MinimalDice dice1, dice2, dice3, dice4, dice5, dice6;
     private final MinimalDice[] dices;
 
-    public DiceSet(MinimalDice dice1, MinimalDice dice2, MinimalDice dice3, MinimalDice dice4, MinimalDice dice5, MinimalDice dice6) {
+    DiceSet(MinimalDice dice1, MinimalDice dice2, MinimalDice dice3, MinimalDice dice4, MinimalDice dice5, MinimalDice dice6) {
         this.dice1 = dice1;
         this.dice2 = dice2;
         this.dice3 = dice3;
@@ -39,7 +48,7 @@ public class DiceSet {
         dices = new MinimalDice[]{dice1, dice2, dice3, dice4, dice5, dice6};
     }
 
-    public DiceSet(String diceSetAsString) {
+    DiceSet(String diceSetAsString) {
         MinimalDice[] dices = new MinimalDice[6];
         for (int i = 0; i < diceSetAsString.length(); i++) {
             dices[i] = new MinimalDice(diceSetAsString.charAt(i));
@@ -67,14 +76,19 @@ public class DiceSet {
         dice6 = dices[5];
     }
 
-    public String getDiceSetAsCharString(){
+    /** Converts the MinimalDice into a String
+     *  If the dice of this object has the values
+     *  [3] [4] [6] [1] [1] [2]
+     *  Then the result of this method should be
+     *  "CDFAAB"
+     * */
+    String getDiceSetAsCharString(){
         String ret = "";
         for (MinimalDice minimalDice : dices) {
             ret += minimalDice.getValueAsString();
         }
         return ret;
     }
-
 
     public MinimalDice[] getDices() {
         return dices;

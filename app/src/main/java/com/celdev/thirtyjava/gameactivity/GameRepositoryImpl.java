@@ -6,12 +6,8 @@ import android.content.SharedPreferences;
 import com.celdev.thirtyjava.model.Constants;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.GameScoring;
-import com.celdev.thirtyjava.model.scoring.DiceSetCounter;
 import com.celdev.thirtyjava.model.scoring.ScoreCounter;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
-import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSet;
-import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetCreator;
-import com.celdev.thirtyjava.model.scoring.dicehelpers.DiceSetPermutationCreator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,29 +39,6 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
         return roundCount > Constants.ROUNDS_IN_GAME;
     }
 
-    @Override
-    public void saveGameState() {
-        SharedPreferences sharedPreferences = getPreference();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        for (int i = 0; i < gameScorings.length; i++) {
-            GameScoring gameScoring = gameScorings[i];
-            if (gameScoring != null) {
-                editor.putString(GAME_SCORING_BASE_KEY + "_" + i, gameScoring.getGameScoringAsStorableObject());
-            }
-        }
-        editor.putInt(GAME_SCORING_BASE_KEY.concat(".roundnr"), roundCount);
-        editor.putInt(GAME_SCORING_BASE_KEY.concat(".thrownr"), throwCount);
-        editor.apply();
-    }
-
-    private SharedPreferences getPreference() {
-        return context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
-    }
-
-    @Override
-    public void loadGameState() {
-        //todo
-    }
 
     @Override
     public void injectGameState(GameApplicationState gameState) {
@@ -129,10 +102,5 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
             scoringIndex = 0;
         }
         gameScorings[scoringIndex] = new GameScoring(scoringMode, new ScoreCounter().calculateScore(dices, scoringMode));
-    }
-
-    @Override
-    public GameScoring[] loadScoring() {
-        return new GameScoring[0];
     }
 }

@@ -184,13 +184,10 @@ public class DiceCheckbox extends android.support.v7.widget.AppCompatCheckBox im
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.d(TAG, "insideOnChanged");
         if (isChecked) {
             setState(DiceViewState.SAVE_VALUE);
-            Log.d(TAG, "onCheckedChanged: save value");
         } else {
             setState(DiceViewState.HAS_VALUE);
-            Log.d(TAG, "onCheckedChanged: has value");
         }
     }
 }

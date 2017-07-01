@@ -6,15 +6,6 @@ interface DiceViewInterface {
 
     Dice getDice();
 
-    void setCantChangeState();
-
-    void onNewThrow();
-
     void rollDice();
 
-    boolean isSaveValue();
-
-    void onNewRound();
-
-    void onLastThrow();
 }
