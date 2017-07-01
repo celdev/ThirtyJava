@@ -121,22 +121,21 @@
             android:text="@string/round_number"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+
             android:id="@+id/round_text"
-            android:gravity="center_horizontal"
+            android:gravity="start"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="100dp" />
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/throw_number"
             app:layout_constraintTop_toBottomOf="@+id/round_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/throw_text"
-            android:gravity="center_horizontal"
+            android:gravity="start"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="101dp" />
+            tools:layout_editor_absoluteX="8dp" />
 
 
         <TableLayout
@@ -144,30 +143,29 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/throw_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="center_horizontal"
+
 
 
             android:id="@+id/scoring_state_table"
             tools:layout_editor_absoluteX="0dp">
 
-            <TableRow android:gravity="center_horizontal">
+            <TableRow>
                 <TextView android:text="Low" android:id="@+id/scoring_state_text_low" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
                 <TextView android:text="4" android:id="@+id/scoring_state_text_4" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
             </TableRow>
-            <TableRow android:gravity="center_horizontal">
+            <TableRow>
                 <TextView android:text="5" android:id="@+id/scoring_state_text_5" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
                 <TextView android:text="6" android:id="@+id/scoring_state_text_6" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
             </TableRow>
-            <TableRow android:gravity="center_horizontal">
+            <TableRow>
                 <TextView android:text="7" android:id="@+id/scoring_state_text_7" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
                 <TextView android:text="8" android:id="@+id/scoring_state_text_8" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
             </TableRow>
-            <TableRow android:gravity="center_horizontal">
+            <TableRow>
                 <TextView android:text="9" android:id="@+id/scoring_state_text_9" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
                 <TextView android:text="10" android:id="@+id/scoring_state_text_10" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
             </TableRow>
-            <TableRow android:gravity="center_horizontal">
+            <TableRow>
                 <TextView android:text="11" android:id="@+id/scoring_state_text_11" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
                 <TextView android:text="12" android:id="@+id/scoring_state_text_12" android:textSize="18sp" android:layout_width="60dp" android:textAlignment="center" />
             </TableRow>

@@ -8,7 +8,23 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameApplicationState implements Serializable {
+/** This class' responsibility is to save the state of the application
+ *  This is done by saving all data that is needed to recreate the state of the application
+ *
+ *  The information needed is
+    *      * The value of each dice and their DiceViewState
+ *              - needed to recreate the DiceCheckboxes
+ *
+    *      * The round and throw count
+    *      * The recorded scores
+    *      * The available Scoring modes
+ *              - needed to recreate the GameRepository
+ *
+    *      * The GameViewState
+ *              - Needed to determind which state the activity should be in
+ *                (Roll the dice or set the score)
+ * */
+class GameApplicationState implements Serializable {
 
     private DiceCheckboxViewState dice1, dice2, dice3, dice4, dice5, dice6;
     private GameScoring[] gameScorings;
@@ -17,12 +33,12 @@ public class GameApplicationState implements Serializable {
     private ScoringMode[] availableScoringModes;
     private GameViewState gameViewState;
 
-    public GameApplicationState(DiceCheckboxViewState dice1, DiceCheckboxViewState dice2,
-                                DiceCheckboxViewState dice3, DiceCheckboxViewState dice4,
-                                DiceCheckboxViewState dice5, DiceCheckboxViewState dice6,
-                                GameScoring[] gameScorings,
-                                int roundCount, int throwCount,
-                                ScoringMode[] availableScoringModes, GameViewState gameViewState) {
+    GameApplicationState(DiceCheckboxViewState dice1, DiceCheckboxViewState dice2,
+                         DiceCheckboxViewState dice3, DiceCheckboxViewState dice4,
+                         DiceCheckboxViewState dice5, DiceCheckboxViewState dice6,
+                         GameScoring[] gameScorings,
+                         int roundCount, int throwCount,
+                         ScoringMode[] availableScoringModes, GameViewState gameViewState) {
         this.dice1 = dice1;
         this.dice2 = dice2;
         this.dice3 = dice3;
@@ -36,58 +52,32 @@ public class GameApplicationState implements Serializable {
         this.gameViewState = gameViewState;
     }
 
-    public enum GameViewState {
-
+    enum GameViewState {
         ROLL,
         SET_SCORE
-
     }
 
-    public GameViewState getGameViewState() {
+    GameViewState getGameViewState() {
         return gameViewState;
     }
 
-    public List<DiceCheckboxViewState> getDiceCheckboxViewStateList(){
+    List<DiceCheckboxViewState> getDiceCheckboxViewStateList(){
         return Arrays.asList(dice1, dice2, dice3, dice4, dice5, dice6);
     }
 
-    public DiceCheckboxViewState getDice1() {
-        return dice1;
-    }
-
-    public DiceCheckboxViewState getDice2() {
-        return dice2;
-    }
-
-    public DiceCheckboxViewState getDice3() {
-        return dice3;
-    }
-
-    public DiceCheckboxViewState getDice4() {
-        return dice4;
-    }
-
-    public DiceCheckboxViewState getDice5() {
-        return dice5;
-    }
-
-    public DiceCheckboxViewState getDice6() {
-        return dice6;
-    }
-
-    public GameScoring[] getGameScorings() {
+    GameScoring[] getGameScorings() {
         return gameScorings;
     }
 
-    public int getRoundCount() {
+    int getRoundCount() {
         return roundCount;
     }
 
-    public int getThrowCount() {
+    int getThrowCount() {
         return throwCount;
     }
 
-    public ScoringMode[] getAvailableScoringModes() {
+    ScoringMode[] getAvailableScoringModes() {
         return availableScoringModes;
     }
 }

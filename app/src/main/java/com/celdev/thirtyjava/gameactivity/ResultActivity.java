@@ -1,8 +1,11 @@
 package com.celdev.thirtyjava.gameactivity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.celdev.thirtyjava.R;
@@ -12,6 +15,7 @@ import com.celdev.thirtyjava.model.GameScoring;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -35,6 +39,10 @@ public class ResultActivity extends AppCompatActivity {
     TextView resultEleven;
     @BindView(R.id.result_12)
     TextView resultTwelve;
+    @BindView(R.id.total_score_text)
+    TextView totalScoreText;
+    @BindView(R.id.start_new_game_button)
+    Button startNewGameButton;
 
     private GameRepository gameRepository;
 
@@ -53,6 +61,18 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.start_new_game_button)
+    public void startNewGame(View view) {
+        gameRepository.newGame();
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     @Override
     protected void onResume() {
@@ -61,7 +81,9 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void showLatestScores(GameScoring[] scorings) {
+        int total = 0;
         for (GameScoring scoring : scorings) {
+            total += scoring.getScore();
             switch (scoring.getScoringMode()) {
                 case LOW:
                     low.setText(scoring.getScoreAsString());
@@ -95,5 +117,6 @@ public class ResultActivity extends AppCompatActivity {
                     break;
             }
         }
+        totalScoreText.setText(getString(R.string.total_score, total));
     }
 }

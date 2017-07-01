@@ -7,4 +7,6 @@ public class Constants {
 
 
     public static final String GAME_SCORINGS = "GAME_SCORING";
+    public static final String BUNDLE_GAME_STATE = "gamestate";
+
 }

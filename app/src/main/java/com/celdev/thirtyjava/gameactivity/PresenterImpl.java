@@ -62,15 +62,7 @@ class PresenterImpl implements GameActivityMVP.Presenter {
         return gameRepository.getAvailableScoringModes();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        gameRepository.saveGameState();
-    }
 
-    @Override
-    public void onRestoreInstanceState(Bundle bundle) {
-        gameRepository.loadGameState();
-    }
 
     @Override
     public void injectGameState(GameApplicationState gameState) {

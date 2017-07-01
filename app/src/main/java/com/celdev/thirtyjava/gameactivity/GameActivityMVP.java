@@ -1,24 +1,23 @@
 package com.celdev.thirtyjava.gameactivity;
 
-import android.os.Bundle;
 
 import com.celdev.thirtyjava.helpers.DiceCheckboxViewState;
 import com.celdev.thirtyjava.model.Dice;
 import com.celdev.thirtyjava.model.GameScoring;
 import com.celdev.thirtyjava.model.scoring.ScoringMode;
-import com.celdev.thirtyjava.view.DiceViewState;
 
 import java.util.List;
 
-public interface GameActivityMVP {
+/** This class contains the method which the
+ *  View, Presenter and the Repository should implement
+ *
+ *  For comments about what each method does, check the implementations
+ * */
+interface GameActivityMVP {
 
     interface View {
 
-        void setState(List<Dice> dices, List<DiceViewState> diceViewStates, ScoringMode[] availableScoringModes);
-
         void newRound();
-
-        void firstThrow();
 
         void newThrow();
 
@@ -42,10 +41,6 @@ public interface GameActivityMVP {
 
         ScoringMode[] getAvailableScoringModes();
 
-        void onSaveInstanceState(Bundle outState);
-
-        void onRestoreInstanceState(Bundle bundle);
-
         GameApplicationState createGameApplicationState(List<DiceCheckboxViewState> diceCheckboxViewStates, GameApplicationState.GameViewState gameViewState);
 
         GameScoring[] getScorings();
@@ -59,15 +54,9 @@ public interface GameActivityMVP {
 
         boolean finishGame();
 
-        void saveGameState();
-
-        void loadGameState();
-
         ScoringMode[] getAvailableScoringModes();
 
         void saveScoring(List<Dice> dices, ScoringMode scoringMode);
-
-        GameScoring[] loadScoring();
 
         int getThrowCount();
 
@@ -82,6 +71,8 @@ public interface GameActivityMVP {
         int getRoundCount();
 
         void injectGameState(GameApplicationState gameState);
+
+        void newGame();
     }
 
 

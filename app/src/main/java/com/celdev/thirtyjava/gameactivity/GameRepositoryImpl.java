@@ -45,7 +45,7 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
 
     @Override
     public void saveGameState() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getPreference();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         for (int i = 0; i < gameScorings.length; i++) {
             GameScoring gameScoring = gameScorings[i];
@@ -56,6 +56,10 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
         editor.putInt(GAME_SCORING_BASE_KEY.concat(".roundnr"), roundCount);
         editor.putInt(GAME_SCORING_BASE_KEY.concat(".thrownr"), throwCount);
         editor.apply();
+    }
+
+    private SharedPreferences getPreference() {
+        return context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -70,6 +74,14 @@ class GameRepositoryImpl implements GameActivityMVP.GameRepository {
         gameScorings = gameState.getGameScorings();
         scoringModes = new ArrayList<>(Arrays.asList(gameState.getAvailableScoringModes()));
         gameScorings = gameState.getGameScorings();
+    }
+
+    @Override
+    public void newGame() {
+        throwCount = 1;
+        roundCount = 1;
+        gameScorings = new GameScoring[10];
+        scoringModes = new ArrayList<>();
     }
 
     @Override

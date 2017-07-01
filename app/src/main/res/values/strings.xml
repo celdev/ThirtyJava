@@ -22,5 +22,6 @@
     <string name="scoring_12">Twelve</string>
     <string name="chooseScoringMode">Please choose a scoring mode</string>
     <string name="game_results">Game Results</string>
+    <string name="new_game">New game</string>
 
 </resources>
